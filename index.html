@@ -56,6 +56,8 @@
   "offers": {
     "@type": "Offer",
     "url": "https://www.onparticipe.fr/b/hRo7N9cX",
+    "price": "0",
+    "priceCurrency": "EUR",
     "availability": "https://schema.org/InStock"
   }
 }
@@ -283,7 +285,7 @@
   .btn{
     display:inline-flex;align-items:center;justify-content:center;gap:12px;
     background:var(--red);color:#fff;text-decoration:none;
-    font-weight:600;font-size:17px;letter-spacing:.01em;
+    font-weight:700;font-size:16px;letter-spacing:.07em;text-transform:uppercase;
     padding:16px 30px;border-radius:999px;
     box-shadow:0 12px 32px -8px rgba(227,22,10,.75),inset 0 1px 0 rgba(255,255,255,.18);
     transition:transform .18s ease,box-shadow .18s ease,background .18s ease;
@@ -315,31 +317,31 @@
 
   /* Soutien : cagnotte en ligne */
   .support{
-    display:flex;align-items:center;gap:16px;
+    display:flex;align-items:center;gap:18px;
     margin-top:clamp(14px,2.4vh,24px);
-    padding:14px 16px 14px 18px;
+    padding:18px 20px;
     border:1px solid var(--line);border-radius:14px;
     background:rgba(255,255,255,.03);
   }
   .support-icon{
-    flex:none;width:38px;height:38px;border-radius:50%;
+    flex:none;width:44px;height:44px;border-radius:50%;
     display:grid;place-items:center;
     background:rgba(227,22,10,.14);color:var(--red-2);
   }
-  .support-icon svg{width:18px;height:18px}
+  .support-icon svg{width:20px;height:20px}
   .support-text{flex:1;min-width:0}
-  .support-text strong{display:block;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px}
-  .support-text p{margin:0;font-size:13px;line-height:1.5;color:var(--muted)}
+  .support-text strong{display:block;font-size:16.5px;font-weight:600;color:var(--ink);margin-bottom:3px}
+  .support-text p{margin:0;font-size:14px;line-height:1.5;color:var(--muted)}
   .btn-ghost{
     flex:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;
-    padding:10px 16px;border-radius:999px;
+    padding:12px 20px;border-radius:999px;
     border:1px solid rgba(255,255,255,.22);color:var(--ink);text-decoration:none;
-    font-size:14px;font-weight:600;white-space:nowrap;
+    font-size:15px;font-weight:600;white-space:nowrap;
     transition:border-color .18s ease,background .18s ease,transform .18s ease;
   }
   .btn-ghost:hover{border-color:var(--red-2);background:rgba(227,22,10,.12);transform:translateY(-1px)}
   .btn-ghost:focus-visible{outline:2px solid #fff;outline-offset:3px}
-  .btn-ghost svg{width:15px;height:15px}
+  .btn-ghost svg{width:16px;height:16px}
 
   .credits{margin-top:clamp(16px,3vh,30px);font-size:12.5px;letter-spacing:.04em;color:var(--muted)}
   .credits span{color:var(--body)}
@@ -374,7 +376,7 @@
   }
 
   /* Écrans peu hauts (ordinateurs portables) : tout tient sur un écran */
-  @media (min-width:881px) and (max-height:800px){
+  @media (min-width:881px) and (max-height:1000px){
     .page{padding-top:18px;padding-bottom:18px}
     .title .name{font-size:clamp(40px,4.8vw,68px)}
     .title .sub{font-size:clamp(18px,1.8vw,24px)}
@@ -382,17 +384,17 @@
     .text p{margin-bottom:.7em}
     .infos{margin-top:14px;padding:10px 0}
     .cta{margin-top:14px}
-    .btn{padding:14px 26px;font-size:16px}
+    .btn{padding:14px 26px;font-size:15px}
     .note{display:none}
     .cta{gap:10px 22px}
     .countdown{gap:5px}
     .cd-tile{padding:5px 8px 4px}
     .cd-tile b{font-size:18px}
-    .support{margin-top:12px;padding:10px 14px 10px 14px;gap:12px}
-    .support-icon{width:32px;height:32px}
-    .support-text strong{font-size:13.5px}
-    .support-text p{font-size:12.5px}
-    .btn-ghost{padding:9px 14px;font-size:13.5px}
+    .support{margin-top:12px;padding:12px 16px;gap:14px}
+    .support-icon{width:38px;height:38px}
+    .support-text strong{font-size:15.5px}
+    .support-text p{font-size:13px}
+    .btn-ghost{padding:10px 16px;font-size:14.5px}
     .credits{margin-top:12px}
   }
 
@@ -439,7 +441,7 @@
     .note{text-align:center}
     .support{flex-wrap:wrap;padding:16px}
     .support-text{flex:1 1 200px}
-    .btn-ghost{flex:1 1 100%;padding:13px 18px}
+    .btn-ghost{flex:1 1 100%;padding:14px 18px;font-size:15.5px}
     .credits{text-align:center}
   }
 
@@ -501,10 +503,10 @@
     <div class="cta reveal">
       <div class="cta-main">
         <a class="btn" href="https://www.onparticipe.fr/b/hRo7N9cX" target="_blank" rel="noopener">
-          Je participe
+          Billetterie gratuite
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
-        <span class="note">Billetterie en ligne · OnParticipe</span>
+        <span class="note">Réservation en ligne · OnParticipe</span>
       </div>
       <div class="countdown" role="timer" aria-label="Temps restant avant la séance">
         <span class="cd-title">Séance dans</span>
