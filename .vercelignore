@@ -1,0 +1,4 @@
+# Fichiers non envoyés sur Vercel
+WhatsApp Image *.jpeg
+.DS_Store
+.claude
