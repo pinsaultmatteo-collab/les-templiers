@@ -143,6 +143,60 @@
     animation:sheen 1.5s cubic-bezier(.4,.1,.2,1) 1.2s both;
   }
 
+  /* Bouton teaser posé sur l'affiche : il ressort en relief quand l'affiche s'incline */
+  .teaser-btn{
+    position:absolute;left:50%;bottom:22px;z-index:3;
+    transform:translateX(-50%) translateZ(60px);
+    display:inline-flex;align-items:center;gap:12px;
+    padding:7px 20px 7px 7px;border-radius:999px;
+    background:rgba(10,10,11,.84);
+    border:1px solid rgba(255,255,255,.18);
+    color:var(--ink);text-decoration:none;white-space:nowrap;
+    font-size:14.5px;font-weight:600;letter-spacing:.01em;
+    box-shadow:0 18px 40px -12px rgba(0,0,0,.85);
+    transition:transform .2s ease,background .2s ease,border-color .2s ease;
+  }
+  .teaser-btn:hover{background:rgba(18,18,20,.94);border-color:rgba(255,59,45,.65);transform:translateX(-50%) translateZ(60px) scale(1.05)}
+  .teaser-btn:focus-visible{outline:2px solid #fff;outline-offset:3px}
+  .teaser-play{
+    flex:none;width:36px;height:36px;border-radius:50%;
+    display:grid;place-items:center;background:var(--red);color:#fff;
+    animation:ring 2.4s ease-out 2.6s infinite;
+  }
+  .teaser-play svg{width:14px;height:14px;margin-left:2px}
+
+  /* Fenêtre du teaser */
+  .teaser-modal{
+    width:min(94vw,1040px,calc((100dvh - 150px) * 16 / 9));
+    max-width:none;max-height:none;margin:auto;
+    padding:0;border:0;background:transparent;color:var(--ink);overflow:visible;
+  }
+  .teaser-modal::backdrop{background:rgba(5,5,6,.84);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+  .teaser-modal[open]{animation:pop .45s cubic-bezier(.2,.7,.2,1)}
+  html:has(.teaser-modal[open]){overflow:hidden}
+  .teaser-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:12px}
+  .teaser-head p{margin:0;font-size:11.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--red-2)}
+  .teaser-head h2{margin:4px 0 0;font-family:var(--font-serif);font-weight:700;font-size:clamp(17px,2.2vw,24px);line-height:1.2}
+  .teaser-head form{margin:0}
+  .teaser-close{
+    flex:none;width:42px;height:42px;border-radius:50%;cursor:pointer;
+    display:grid;place-items:center;
+    border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.04);color:var(--ink);
+    transition:border-color .18s ease,background .18s ease;
+  }
+  .teaser-close:hover{border-color:var(--red-2);background:rgba(227,22,10,.15)}
+  .teaser-close:focus-visible{outline:2px solid #fff;outline-offset:3px}
+  .teaser-close svg{width:18px;height:18px}
+  .teaser-frame{
+    position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#000;
+    box-shadow:0 40px 120px -20px rgba(0,0,0,.9),0 0 0 1px rgba(255,255,255,.08),0 0 160px -30px var(--red-glow);
+  }
+  .teaser-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .teaser-foot{margin:10px 0 0;text-align:right}
+  .teaser-foot a{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--muted);text-decoration:none}
+  .teaser-foot a:hover{color:var(--ink)}
+  .teaser-foot svg{width:13px;height:13px}
+
   /* Contenu */
   .content{max-width:660px}
 
@@ -293,9 +347,11 @@
   }
   @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
   @keyframes sheen{from{left:-70%}to{left:135%}}
+  @keyframes ring{0%{box-shadow:0 0 0 0 rgba(227,22,10,.6)}80%,100%{box-shadow:0 0 0 14px rgba(227,22,10,0)}}
+  @keyframes pop{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:none}}
 
   @media (prefers-reduced-motion:reduce){
-    .reveal,.dot,.scene,.poster,.poster-sheen::before{animation:none}
+    .reveal,.dot,.scene,.poster,.poster-sheen::before,.teaser-play,.teaser-modal[open]{animation:none}
     .poster{transform:none}
     .poster-glare{display:none}
     .btn,.btn svg{transition:none}
@@ -330,12 +386,19 @@
     .scene{margin:0;perspective:none;animation:none}
     .poster{border-radius:0;box-shadow:none;animation:none;transform:none!important}
     .poster-glare,.poster-sheen{display:none}
+    .teaser-btn{bottom:calc(16vh + 26px);padding:6px 17px 6px 6px;font-size:14px;transform:translateX(-50%)}
+    .teaser-btn:hover{transform:translateX(-50%)}
+    .teaser-play{width:32px;height:32px}
+    .teaser-head{align-items:center}
+    /* noir uni, sans halo ni grain : raccord net avec le fondu bas de l'affiche */
+    body::before{background:var(--bg)}
+    body::after{display:none}
     .poster img{
       width:100%;height:min(64vh,620px);max-width:none;
       border-radius:0;box-shadow:none;object-position:center 42%;
     }
     .poster::after{
-      content:"";position:absolute;inset:0;
+      content:"";position:absolute;inset:0 0 -3px 0; /* déborde de 3 px : masque la rangée de pixels résiduelle */
       background:linear-gradient(to bottom,rgba(10,10,11,0) 38%,rgba(10,10,11,.55) 68%,var(--bg) 100%);
     }
     .content{
@@ -391,6 +454,10 @@
            width="840" height="1492" fetchpriority="high">
       <span class="poster-glare" aria-hidden="true"></span>
       <span class="poster-sheen" aria-hidden="true"></span>
+      <a class="teaser-btn" href="https://www.youtube.com/watch?v=F3BVdr8J_jA" target="_blank" rel="noopener" data-teaser aria-haspopup="dialog">
+        <span class="teaser-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12.5-7.5a1 1 0 0 0 0-1.72L8.5 3.64A1 1 0 0 0 7 4.5z"/></svg></span>
+        Voir le teaser
+      </a>
     </div>
   </figure>
 
@@ -452,8 +519,46 @@
 
 </main>
 
+<dialog class="teaser-modal" id="teaser" aria-labelledby="teaser-title">
+  <div class="teaser-head">
+    <div>
+      <p>Teaser</p>
+      <h2 id="teaser-title">Les Templiers (80 km) – Le film de mon premier ultra-trail</h2>
+    </div>
+    <form method="dialog">
+      <button class="teaser-close" aria-label="Fermer la vidéo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </form>
+  </div>
+  <div class="teaser-frame"></div>
+  <p class="teaser-foot">
+    <a href="https://www.youtube.com/watch?v=F3BVdr8J_jA" target="_blank" rel="noopener">Voir sur YouTube
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
+    </a>
+  </p>
+</dialog>
+
 <a class="signature" href="https://www.agence-pmc-marketing.com/" target="_blank" rel="noopener">Page réalisée par <strong>PMC Marketing</strong></a>
 
+<script>
+(() => {
+  /* ---- Teaser : lecteur YouTube ouvert dans une fenêtre, chargé seulement au clic ---- */
+  const link = document.querySelector('[data-teaser]');
+  const modal = document.getElementById('teaser');
+  if (!link || !modal || typeof modal.showModal !== 'function') return; // sinon le lien ouvre YouTube
+  const frame = modal.querySelector('.teaser-frame');
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    frame.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/F3BVdr8J_jA?autoplay=1&rel=0&playsinline=1"'
+      + ' title="Teaser – Les Templiers (80 km)" allow="autoplay; encrypted-media; picture-in-picture"'
+      + ' allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>';
+    modal.showModal();
+  });
+  modal.addEventListener('close', () => { frame.innerHTML = ''; link.focus({ preventScroll: true }); });
+  modal.addEventListener('click', e => { if (e.target === modal) modal.close(); });
+})();
+</script>
 <script>
 (() => {
   /* ---- Compte à rebours : mardi 10 novembre 2026, 20h (heure de Paris) ---- */
